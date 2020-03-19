@@ -1,17 +1,25 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import UserItem from "./UserItem";
+import Spinner from "../layout/Spinner";
+import GithubContext from "../../context/github/githubContext";
 
-export class Users extends Component {
-  render() {
+const Users = () => {
+  const githubContext = useContext(GithubContext);
+
+  const { loading, users } = githubContext;
+
+  if (loading) {
+    return <Spinner />;
+  } else {
     return (
       <div style={userStyle}>
-        {this.props.users.map(user => (
+        {users.map(user => (
           <UserItem key={user.id} user={user} />
         ))}
       </div>
     );
   }
-}
+};
 
 const userStyle = {
   display: "grid",
